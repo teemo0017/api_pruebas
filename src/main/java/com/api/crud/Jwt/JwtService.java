@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.api.crud.models.UserModels;
+import com.api.crud.repositories.IUserRepository;
+import com.api.crud.services.UserService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,16 +25,24 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 	private static final String SECRET_KEY = "NKL68GJI123671213SADA2UG3UI12786SDADGUIOHASUDAUJISBDUJ213312131HJSAD6A7S6D";
+	
+	
+	@Autowired
+	IUserRepository userRepository;
+	
 	public String getToken(UserDetails user) {
 		return getToken(new HashMap<>(), user );
 	}
 
 	
 	private String getToken(Map<String,Object> extraClaims,UserDetails user) {
+		
+		Long id = this.userRepository.findByUsername(user.getUsername()).get().getId();
 		return Jwts
 				.builder()
 				.setClaims(extraClaims)
 				.setSubject(user.getUsername())
+				.setId(id.toString())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
 				.signWith(getKey(), SignatureAlgorithm.HS256)

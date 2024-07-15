@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.api.crud.models.MascotasModels;
 import com.api.crud.models.UserModels;
+import com.api.crud.repositories.IMascotasRepository;
 import com.api.crud.repositories.IUserRepository;
 
 @Service
@@ -15,10 +17,14 @@ public class UserService {
 	@Autowired
 	IUserRepository userRepository;
 	
+	@Autowired
+	IMascotasRepository mascotaRepository;
+	
 	
 	public ArrayList<UserModels> getUsers(){
 		return (ArrayList<UserModels>) userRepository.findAll();
 	}
+	
 	
 	
 	  public UserModels saveUser(UserModels user) {
@@ -40,4 +46,12 @@ public class UserService {
 		 
 		 return user;
 	 }
+	 
+	    public void deleteById(Long id) {
+	        userRepository.deleteById(id);
+	    }
+	 
+	 
+
+	 
 }

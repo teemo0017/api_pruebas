@@ -47,6 +47,8 @@ private final AuthenticationManager authenticationManager;
 			.country(request.getCountry())
 			.email(request.getEmail())
 			.role(rol)
+			.age(request.getAge())
+			.phone(request.getPhone())
 			.build();
 	userRepository.save(user);
 	

@@ -19,5 +19,7 @@ String lastname;
 String country;
 String email;
 String role;
+int age;
+String phone;
 
 }

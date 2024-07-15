@@ -9,5 +9,7 @@ import com.api.crud.models.UserModels;
 
 @Repository
 public interface IUserRepository extends JpaRepository<UserModels, Long> {
+	
 Optional<UserModels> findByUsername(String username);
+
 }
