@@ -2,6 +2,7 @@ package com.api.crud.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,11 +31,10 @@ public class MascotasController {
 		  return request;
 	  }
 	  
-	    @PostMapping("editar/{id}")
-	    public MascotasModels updatePet(@RequestBody MascotasModels mascota, @PathVariable Long id){
-	        mascota.setId(id);
-	        return mascotaService.updatePet(mascota);
-	    }
+    @PostMapping("/editar")
+	    public MascotasModels updatePet(@RequestBody MascotasModels mascota, @RequestParam Long idPet,@RequestParam Long idUser){
+       return mascotaService.updatePet(mascota, idPet, idUser)  ;
+       }
 	    
 	    
 		  @GetMapping
@@ -46,4 +46,10 @@ public class MascotasController {
 		  public List<MascotasModels> buscarMascotasPorCliente(@PathVariable Long id){
 			  return this.mascotaService.buscarPetsPorCliente(id);
 		  }
+		  
+		  @GetMapping("buscar/pet/{id}")
+		  public Optional<MascotasModels> buscarMascota(@PathVariable Long id){
+			  return this.mascotaService.buscarPet(id);
+		  }
 }
+
